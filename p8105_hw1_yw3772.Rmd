@@ -6,11 +6,12 @@ output: github_document
 
 ```{r, echo = FALSE, message=FALSE}
 library(tidyverse)
+library(ggplot2)
 ```
 
 ## Probelm 1
 
-This code chunk creates a data frame consists of numeric, logical, character and factor vectors.
+**This code chunk creates a data frame consists of numeric, logical, character and factor vectors.**
 
 ```{r}
 set.seed(12)
@@ -25,7 +26,7 @@ df <- tibble(
 )
 ```
 
-Try to take the mean of each variable in the dataframe
+**Try to take the mean of each variable in the dataframe**
 
 ```{r}
 mean(pull(df,x))
@@ -35,11 +36,10 @@ mean(pull(df,w))
 ```
 
 I can take the mean of variables x and y , which are numeric and logical vectors.
-
 I can not take the mean of variables z and w, because they are character and factor vectors.
 
 
-Below is the code chunk that applies as.numeric function to the logical, character, and factor variables. No output will be shown
+**Below is the code chunk that applies as.numeric function to the logical, character, and factor variables. Output will not be shown**
 
 ```{r, results = 'hide', warning = FALSE}
 as.numeric(pull(df,y))
@@ -47,4 +47,70 @@ as.numeric(pull(df,z))
 as.numeric(pull(df,w))
 ```
 
+Logical and factor vectors are successfully converted to numeric vectors.
+Character vector can not be converted to numeric vector.
+
+The failure of taking mean in the above section is because only numeric and logical vectors can take means. For logical vector, 1 represents True and 0 represents False.
+
+## Problem 2
+
+**Loading the penguins dataset**
+
+```{r}
+library(palmerpenguins)
+data("penguins", package = "palmerpenguins")
+```
+
+**Descriptions of the penguins dataset**
+
+The variable names in this dataset are: 
+`r names(penguins)`.
+
+The table below shows the number of each species in the *species* variable
+
+```{r, echo=FALSE}
+summary(pull(penguins,species))
+```
+
+The table below shows the number of each island type in the *island* variable
+
+```{r, echo=FALSE}
+summary(pull(penguins,island))
+```
+
+The table below shows the min, 1st quartile, median, mean, 3rd quartile, max value, and number of NA's of the variable *bill_length_mm* 
+
+```{r, echo=FALSE}
+summary(pull(penguins,bill_length_mm))
+```
+
+The table below shows the min, 1st quartile, median, mean, 3rd quartile, max value, and number of NA's of the variable *bill_depth_mm*
+```{r, echo=FALSE}
+summary(pull(penguins,bill_depth_mm))
+```
+
+The table below shows the min, 1st quartile, median, mean, 3rd quartile, max value, and number of NA's of the variable *flipper_length_mm*
+```{r, echo=FALSE}
+summary(pull(penguins,flipper_length_mm))
+```
+
+The table below shows the min, 1st quartile, median, mean, 3rd quartile, max value, and number of NA's of the variable *body_mass_g*
+```{r, echo=FALSE}
+summary(pull(penguins,body_mass_g))
+```
+
+There are `r nrow(penguins)` rows and `r ncol(penguins)` columns.
+
+The mean flipper length is `r mean(pull(penguins, flipper_length_mm), na.rm = T)`
+
+**Scatter plot of flipper_length_mm (y) vs bill_length_mm (x)**
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color=species)) + geom_point()
+```
+
+Save the scatter plot as "hw1_scatterplot"
+```{r}
+ggsave("hw1_scatterplot.pdf")
+```
 
