@@ -1,0 +1,50 @@
+---
+title: "P8105 Homework 1"
+author: Yushan Wang
+output: github_document
+---
+
+```{r, echo = FALSE, message=FALSE}
+library(tidyverse)
+```
+
+## Probelm 1
+
+This code chunk creates a data frame consists of numeric, logical, character and factor vectors.
+
+```{r}
+set.seed(12)
+
+df <- tibble(
+  x = rnorm(10),
+  y = x > 0,
+  z = c("red", "red", "red", "red", 
+        "blue", "blue", "blue", 
+        "yellow", "yellow", "yellow"),
+  w = factor(z)
+)
+```
+
+Try to take the mean of each variable in the dataframe
+
+```{r}
+mean(pull(df,x))
+mean(pull(df,y))
+mean(pull(df,z))
+mean(pull(df,w))
+```
+
+I can take the mean of variables x and y , which are numeric and logical vectors.
+
+I can not take the mean of variables z and w, because they are character and factor vectors.
+
+
+Below is the code chunk that applies as.numeric function to the logical, character, and factor variables. No output will be shown
+
+```{r, results = 'hide', warning = FALSE}
+as.numeric(pull(df,y))
+as.numeric(pull(df,z))
+as.numeric(pull(df,w))
+```
+
+
